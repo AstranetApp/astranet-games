@@ -1,0 +1,18 @@
+node_modules/
+dist/
+
+# базы sqlite: создаются при первом запуске в DATA_DIR
+*.db
+*.db-shm
+*.db-wal
+
+.env
+.env.*
+*.log
+.DS_Store
+
+# Саундтрек ЖК «Щастливый Гой» — треки сторонних авторов, в репозиторий
+# они не входят. Как вернуть звук: games/happy-goi/client/public/audio/README.md
+games/happy-goi/client/public/audio/*.mp3
+games/happy-goi/assets_src/*.mp3
+games/happy-goi/assets_src/*.m4a

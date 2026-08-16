@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  happy-goi:
+    name: ЖК «Щастливый Гой»
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: games/happy-goi
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: games/happy-goi/client/package-lock.json
+
+      - name: Установка зависимостей клиента
+        working-directory: games/happy-goi/client
+        run: npm ci
+
+      - name: Проверка типов
+        working-directory: games/happy-goi/client
+        run: npx tsc -b
+
+      - name: Сборка клиента
+        working-directory: games/happy-goi/client
+        run: npm run build
+
+      # Сервер не имеет зависимостей: проверяем, что он стартует,
+      # создаёт базу и отвечает на /healthz.
+      - name: Проверка запуска сервера
+        run: |
+          DATA_DIR="$(mktemp -d)" PORT=8097 node server/server.js &
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:8097/healthz > /dev/null; then
+              echo "сервер отвечает"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "сервер не ответил за 30 секунд"
+          exit 1

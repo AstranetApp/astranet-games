@@ -1,0 +1,14 @@
+{
+  "name": "happy-goi",
+  "version": "1.0.0",
+  "description": "ЖК «Щастливый Гой» — визуальная новелла с мини-играми на Astranet Web Tab SDK",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server/server.js",
+    "build": "npm --prefix client ci && npm --prefix client run build"
+  },
+  "engines": {
+    "node": ">=22.5"
+  }
+}

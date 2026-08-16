@@ -1,0 +1,6 @@
+client/node_modules
+client/dist
+assets_src
+node_modules
+*.db
+*.db-*
