@@ -10,6 +10,7 @@
 | Игра | Описание | Прод |
 | --- | --- | --- |
 | [ЖК «Щастливый Гой»](games/happy-goi) | Визуальная новелла с двумя мини-играми: сапёр и пункт пропуска | [goi.astranetapp.com](https://goi.astranetapp.com) |
+| [Taisei Project](games/taisei) | Self-hosted официальная Emscripten/WebAssembly-сборка с IDBFS и Astranet identity | — |
 
 ## Интеграция с Astranet
 
@@ -90,6 +91,7 @@ const plausible = duration >= d.minTime && duration <= elapsed + 3;
 ```
 docs/web-tab-sdk.md     протокол идентификации Astranet Web Tab SDK
 games/happy-goi/        ЖК «Щастливый Гой» (React 19, Vite, TypeScript)
+games/taisei/           Taisei Project (официальный Emscripten runtime, Node 24)
 ```
 
 Каждая игра содержит собственный README с описанием механик, формул
@@ -116,6 +118,18 @@ DATA_DIR=/tmp/goi PORT=8097 node --experimental-sqlite server/server.js
 docker build -t happygoi games/happy-goi
 docker run -d --name happygoi --restart unless-stopped \
   -p 127.0.0.1:8097:8097 -v happygoi-data:/data happygoi
+```
+
+Taisei готовится из зафиксированного официального release asset (около 191 MiB,
+checksum проверяется); production URL и регистрация в основном Astranet в этот
+репозиторий не входят:
+
+```bash
+cd games/taisei
+npm ci
+npm run prepare
+npm test
+npm start
 ```
 
 ## Аудиофайлы

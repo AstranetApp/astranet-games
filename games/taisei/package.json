@@ -1,0 +1,19 @@
+{
+  "name": "@astranet-games/taisei",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "prepare": "node scripts/prepare-runtime.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node tests/all.test.js",
+    "test:e2e": "playwright test --config tests/browser/playwright.config.js",
+    "start": "node server/server.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.0"
+  }
+}

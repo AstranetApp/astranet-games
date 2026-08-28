@@ -1,0 +1,9 @@
+node_modules
+.cache
+runtime/upstream
+test-results
+playwright-report
+.data
+*.db
+*.db-shm
+*.db-wal

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taisei Project — Astranet Games</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preload" href="/taisei.wasm" as="fetch" crossorigin>
+  <link rel="stylesheet" href="/shell/styles.css">
+</head>
+<body>
+  <canvas id="canvas" tabindex="0" aria-label="Taisei Project game canvas"></canvas>
+  <section id="boot" class="boot" aria-live="polite">
+    <img class="spinner" src="/scythe.webp" alt="">
+    <h1>Taisei Project</h1>
+    <p id="status">Checking browser capabilities…</p>
+    <progress id="progress" max="100" value="0" hidden></progress>
+    <p id="warning" class="warning" hidden></p>
+  </section>
+  <aside class="toolbar" aria-label="Game status and actions">
+    <span id="mode">Identity: waiting</span>
+    <span id="save-state">Save: waiting</span>
+    <button id="focus" type="button">Focus game</button>
+    <button id="fullscreen" type="button">Fullscreen</button>
+    <a href="/attribution/">Attribution</a>
+  </aside>
+  <script type="module" src="/shell/bootstrap.js"></script>
+</body>
+</html>

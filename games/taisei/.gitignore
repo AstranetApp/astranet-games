@@ -1,0 +1,4 @@
+/.cache/
+/runtime/upstream/
+/test-results/
+/playwright-report/

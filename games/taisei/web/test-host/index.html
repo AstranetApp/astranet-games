@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Astranet test host</title>
+  <link rel="stylesheet" href="/test-host/styles.css">
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Astranet test host</h1>
+      <p>Same-origin development parent for the Web Tab identity handshake.</p>
+    </div>
+    <div class="actions">
+      <button id="reload" type="button">Reload iframe</button>
+      <button id="standalone" type="button">Open standalone</button>
+    </div>
+  </header>
+  <ol id="events" aria-live="polite"></ol>
+  <iframe id="game" title="Taisei Project" src="/?diagnostics=1" allow="fullscreen" allowfullscreen></iframe>
+  <script type="module" src="/test-host/host.js"></script>
+</body>
+</html>

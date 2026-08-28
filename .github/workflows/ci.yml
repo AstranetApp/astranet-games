@@ -48,3 +48,65 @@ jobs:
           done
           echo "сервер не ответил за 30 секунд"
           exit 1
+
+  taisei:
+    name: Taisei Project (WASM)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: games/taisei
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: games/taisei/package-lock.json
+
+      - name: Cache verified Taisei release asset
+        uses: actions/cache@v4
+        with:
+          path: games/taisei/.cache/Taisei-1.4.6-emscripten-wasm32.tar.xz
+          key: taisei-1.4.6-a6b742b6db2dd835f8cf199b4fa4e6a213eb09e68e50e89dd55a5254a39298af
+
+      - name: Install test tools
+        run: npm ci
+
+      - name: Fast source and server checks
+        run: |
+          npm run check
+          npm test
+
+      # prepare verifies a restored cache entry before use and redownloads any
+      # partial/corrupt entry; only a successful job is saved back to cache.
+      - name: Acquire and verify official runtime
+        run: npm run prepare
+
+      - name: Verify prepared runtime
+        run: npm run check
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Real standalone and iframe smoke
+        run: npm run test:e2e
+
+      - name: Reproducible Docker build
+        working-directory: .
+        run: docker build -t astranet-taisei games/taisei
+
+      - name: Docker health smoke
+        working-directory: .
+        run: |
+          docker run -d --name astranet-taisei-ci -p 127.0.0.1:8098:8098 astranet-taisei
+          trap 'docker rm -f astranet-taisei-ci' EXIT
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:8098/healthz > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          docker logs astranet-taisei-ci
+          exit 1
